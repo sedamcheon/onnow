@@ -1,0 +1,32 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="부산 16개 구·군의 봉사활동을 가볍게 찾아보세요. 부산 봉사 온나 ON NOW">
+<meta name="theme-color" content="#116b64"><title>부산 봉사 온나 · ON NOW</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body><div class="wrap">
+<header><a class="brand" href="#">부산 봉사 온나<span>ON NOW · BUSAN</span></a><nav aria-label="주 메뉴"><a href="#results">봉사 찾기</a><a href="#settings">연결 설정</a></nav></header>
+<main>
+<section class="hero"><div class="eyebrow">우리 동네, 함께하는 오늘</div><h1>마음을 나누는 일,<br><em>부산에서 시작해요.</em></h1><p>가까운 동네부터 관심 있는 활동까지.<br>나와 잘 맞는 봉사활동을 찾아, 따뜻한 오늘을 만들어 보세요.</p>
+<img class="sea" src="./assets/busan-bridge.svg" width="1080" height="100" alt="" decoding="async"></section>
+<section class="searchbox" aria-label="봉사활동 검색"><form id="searchForm"><div class="searchrow"><label class="sr" for="district">활동지역</label><select id="district"><option value="">부산 전체</option></select><label class="sr" for="query">검색어</label><input id="query" maxlength="100" placeholder="지역이나 봉사활동을 검색해 보세요" autocomplete="off"><button class="primary" type="submit" id="searchButton">검색</button></div></form><div class="chips" aria-label="추천 검색어"><button type="button" data-query="남구 말벗">남구 말벗</button><button type="button" data-query="해운대구 플로깅">해운대구 플로깅</button><button type="button" data-query="연탄봉사">연탄봉사</button><button type="button" data-query="교육봉사">교육봉사</button></div><p class="hint">필요할 때만 50개씩 확인해요. 같은 목록은 6시간 동안 재사용하며, 상세정보는 선택할 때 불러옵니다.</p></section>
+<div id="notice" class="notice" role="status">검색어 또는 지역을 선택해 주세요. 첫 화면에서는 Firebase 데이터를 다운로드하지 않습니다.</div>
+<section id="results" aria-labelledby="resultTitle"><div class="toolbar"><h2 id="resultTitle">어떤 나눔을 찾고 있나요?</h2><span id="count" class="muted"></span></div><p id="coverage" class="muted"></p><div id="cards" class="cards"></div><div id="empty" class="empty">관심 있는 활동을 검색해 보세요.<br>실제 연결된 공고만 보여드려요.</div><div class="more"><button id="more" class="secondary" hidden>다음 50개 확인</button><button id="retry" class="secondary" hidden>다시 검색하기</button></div><p id="sync" class="statusline">1365 · VMS: 아직 연동 상태를 확인하지 않았습니다.</p><p id="usage" class="statusline">이번 방문의 응답 본문: 0 KB · Firebase Storage 사용 없음</p></section>
+<details id="settings" class="settings"><summary>처음 시작하기 · Firebase 연결과 규칙</summary><p class="muted">사이트 운영자가 최초 배포 전에 script.js의 CONFIG 주소를 입력하세요. 이 화면의 설정은 현재 브라우저에만 저장됩니다. 비밀키나 관리자 키는 입력하지 마세요.</p><label for="databaseUrl">Firebase Realtime Database URL</label><input id="databaseUrl" type="url" placeholder="https://내프로젝트-default-rtdb.asia-southeast1.firebasedatabase.app"><label for="siteUrl">게시 주소 (GitHub Pages 또는 Vercel · 선택)</label><input id="siteUrl" type="url" placeholder="https://내계정.github.io/저장소/"><div class="actions"><button id="saveSettings" class="primary">연결 주소 저장</button><button id="clearCache" class="secondary">저장한 공고 캐시 지우기</button></div><p id="settingNote" class="muted" role="status"></p><h3>Realtime Database → 규칙 → 붙여넣기 → 게시</h3><pre id="rulesText"></pre><button id="copyRules" class="secondary">규칙 복사</button><p class="muted">루트 전체 읽기와 모든 클라이언트 쓰기를 차단합니다. 목록은 최대 51개(페이지 경계 포함), 상세는 개별 공고만 공개합니다. 공개 공고의 개인정보는 저장하지 마세요. 이 규칙은 호출 횟수나 월간 비용의 상한을 보장하지 않습니다.</p><h3>저장 구조 · 경량 목록과 상세 분리</h3><pre>list / 07_YYYYMMDD_1365_공고번호
+  t: 제목, r: 남구, o: 기관, s: 1365 또는 vms
+  a: 활동시작일, b: 활동종료일 (YYYY-MM-DD)
+  rs: 모집시작일, e: 모집마감일 (YYYY-MM-DD)
+  st: open (원본에서 모집 중임을 확인한 경우만)
+  x: 검색용 내용 요약·분야 (권장 160자 이내)
+  u: 원본 확인 시각 (ISO 8601)
+details / 같은 키
+  description, location, time, capacity, applied,
+  target, conditions, sourceUrl
+meta
+  updatedAt: 마지막 정상 수집 시각 (ISO 8601)
+  sources: { "1365": "connected", "vms": "unavailable" }</pre><p class="muted">키 앞 두 자리는 아래 지역 순서의 01~16입니다. 중구, 서구, 동구, 영도구, 부산진구, 동래구, 남구, 북구, 해운대구, 사하구, 금정구, 강서구, 연제구, 수영구, 사상구, 기장군. YYYYMMDD는 모집마감일입니다. 목록에는 긴 설명·이미지·개인 연락처를 넣지 않고, 상세에는 목록 필드를 중복 저장하지 않습니다. 누락 값은 생략합니다.</p><h3>실제 데이터 연결 안내</h3><p class="muted">이 HTML은 저장된 공고를 읽는 화면입니다. GitHub Pages에서는 비밀 API 키를 보관하는 서버와 예약 수집을 실행할 수 없습니다. 별도 서버가 1365 공식 API 및 사용 허가를 받은 VMS 자료를 하루 1회 수집해 이 구조로 저장해야 합니다. 관리자 SDK 또는 Firebase 콘솔로만 저장하세요. 수집이 성공한 뒤 종료 공고의 목록·상세를 함께 삭제하고, 실패 시 이전 정상 자료를 보존하세요. 바뀐 필드만 갱신하고 수집 이력은 누적하지 않으면 저장량을 줄일 수 있습니다.</p><p class="muted">검색 범위는 제목·기관·지역·검색용 요약입니다. 긴 상세 설명 전체 검색은 포함하지 않습니다. 비용 절감을 위해 전체 공고를 자동 다운로드하지 않으며, 다음 페이지를 확인해야 아직 읽지 않은 공고도 검색됩니다. 전체 자료를 즉시 검색해야 한다면 별도 검색 서버가 필요합니다.</p><p class="muted"><a href="https://www.data.go.kr/data/15157582/openapi.do" target="_blank" rel="noopener noreferrer">1365 공식 API 안내</a> · <a href="https://firebase.google.com/docs/database/rest/retrieve-data" target="_blank" rel="noopener noreferrer">Firebase REST 조회 문서</a></p></details>
+</main><footer>부산 봉사 온나 ON NOW · 202510467 천세담<br>모집 상태와 신청 가능 여부는 원본 공고에서 최종 확인해 주세요.</footer>
+</div><dialog id="detailDialog" aria-labelledby="detailTitle"><div class="dialogtop"><h2 id="detailTitle">봉사활동 상세정보</h2><button id="closeDialog" class="close" aria-label="상세정보 닫기">×</button></div><div id="detailBody"></div></dialog>
+<script src="./script.js" defer></script></body></html>

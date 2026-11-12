@@ -1,0 +1,17 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "list": {
+      ".read": "query.orderByKey && query.limitToFirst != null && query.limitToFirst > 0 && query.limitToFirst <= 51"
+    },
+    "details": {
+      "$id": {
+        ".read": true
+      }
+    },
+    "meta": {
+      ".read": true
+    }
+  }
+}
